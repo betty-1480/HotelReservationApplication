@@ -1,5 +1,8 @@
 package ui;
 
+import api.HotelReservationResource;
+import service.ReservationService;
+
 import java.util.Scanner;
 
 /**
@@ -8,21 +11,34 @@ import java.util.Scanner;
  * It parses primitive types and String types into tokens.
  */
 class MainMenu {
+    private static boolean exit=false;
     static void displayMainMenu(){
-        Scanner scanner= new Scanner(System.in);
-        System.out.println("----------------------");
-        System.out.println("1. Find a reserve room");
-        System.out.println("2. See my reservations");
-        System.out.println("3. Create an account");
-        System.out.println("4. Admin");
-        System.out.println("5. Exit");
-        System.out.println("----------------------");
-        System.out.println("Enter your option:");
-        int selection= Integer.parseInt(scanner.nextLine());
+        do{
+            Scanner scanner= new Scanner(System.in);
+            System.out.println("----------------------");
+            System.out.println("1. Find a reserve room");
+            System.out.println("2. See my reservations");
+            System.out.println("3. Create an account");
+            System.out.println("4. Admin");
+            System.out.println("5. Exit");
+            System.out.println("----------------------");
+            System.out.println("Enter your option:");
+            int selection= Integer.parseInt(scanner.nextLine());
+            HotelReservationResource hotelReservationResource = new HotelReservationResource();
+            if (selection==3){
+                System.out.println("Enter first name:");
+                String firstName=scanner.nextLine();
+                System.out.println("Enter last name:");
+                String lastName=scanner.nextLine();
+                System.out.println("Enter email address:");
+                String email=scanner.nextLine();
+                hotelReservationResource.createACustomer(email,firstName,lastName);
+            }
+            else if (selection==4){
 
-        if (selection==3){
-
-        }
-
+            }
+            else if (selection==5)
+                exit=true;
+        }while (!exit);
     }
 }
