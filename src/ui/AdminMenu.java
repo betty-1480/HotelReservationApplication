@@ -24,7 +24,7 @@ class AdminMenu extends AdminResource {
              System.out.println("Enter your option:");
              int selection= Integer.parseInt(scanner.nextLine());
              if (selection==1){
-                 ArrayList<Customer> customers= getAllCustomers();
+                 ArrayList<Customer> customers= getCustomers();
                  System.out.println("Customer arrylist size:"+customers.size());
                  for (Customer customer:customers){
                      System.out.println(customer.toString());

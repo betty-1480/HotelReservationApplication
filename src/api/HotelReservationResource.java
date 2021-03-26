@@ -1,11 +1,12 @@
 package api;
 
 import model.Customer;
+import service.CustomerService;
 import service.ReservationService;
 
 public class HotelReservationResource extends ReservationService {
 
-AdminResource adminResource=new AdminResource();
+    CustomerService customerService=new CustomerService();
 /*
     public Customer getCustomer(String email){
 
@@ -13,6 +14,6 @@ AdminResource adminResource=new AdminResource();
 */
 
     public void  createACustomer(String email, String firstName, String lastName){
-        adminResource.addCustomer(email,firstName,lastName);
+        customerService.addCustomer(email,firstName,lastName);
     }
 }

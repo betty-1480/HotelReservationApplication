@@ -2,7 +2,6 @@ package ui;
 
 import api.AdminResource;
 import api.HotelReservationResource;
-import service.ReservationService;
 
 import java.util.Scanner;
 

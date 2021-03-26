@@ -13,7 +13,7 @@ public class AdminResource extends CustomerService {
 
     }*/
 
-    public  ArrayList<Customer> getCustomers(){
+     public ArrayList<Customer> getCustomers(){
         return getAllCustomers();
     }
 }
