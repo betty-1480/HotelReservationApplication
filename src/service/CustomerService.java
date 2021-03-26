@@ -11,7 +11,7 @@ public class CustomerService {
     private  String firstName;
     private  String lastName;
     private  String email;
-    private ArrayList<Customer> customerArrayList=new ArrayList<Customer>();
+    private final ArrayList<Customer> customerArrayList=new ArrayList<Customer>();
 
     public void addCustomer(String email, String firstName, String lastName){
         Customer customer=new Customer(firstName,lastName,email);
@@ -22,8 +22,8 @@ public class CustomerService {
 
     }*/
 
-/*    public Collections<Customer> getAllCustomers(){
-
-    }*/
+    public ArrayList<Customer> getAllCustomers(){
+        return this.customerArrayList;
+    }
 
 }

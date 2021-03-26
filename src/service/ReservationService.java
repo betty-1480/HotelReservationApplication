@@ -1,5 +1,8 @@
 package service;
 
-public class ReservationService extends CustomerService {
+
+import model.Customer;
+
+public class ReservationService {
 
 }

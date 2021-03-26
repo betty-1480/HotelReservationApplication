@@ -24,6 +24,7 @@ public class Customer {
      *     1. Create a Pattern based on a specialized syntax
      *     2. Use the Matcher to determine if the pattern exists in the String provided
      */
+
     public Customer(String firstName, String lastName, String email){
         final String emailRegex = "^(.+)@(.+).com$";
         final Pattern pattern =Pattern.compile(emailRegex);
