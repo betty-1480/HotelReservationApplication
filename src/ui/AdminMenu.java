@@ -3,6 +3,9 @@ package ui;
 import api.AdminResource;
 import com.sun.tools.javac.Main;
 import model.Customer;
+import model.IRoom;
+import model.Room;
+import model.RoomType;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -25,10 +28,28 @@ class AdminMenu extends AdminResource {
              int selection= Integer.parseInt(scanner.nextLine());
              if (selection==1){
                  ArrayList<Customer> customers= getCustomers();
-                 System.out.println("Customer arrylist size:"+customers.size());
                  for (Customer customer:customers){
                      System.out.println(customer.toString());
                  }
+             }
+             else if (selection==2){
+                ArrayList<Room> rooms=displayRooms();
+                 for (Room room:rooms)
+                     System.out.println(room.toString());
+             }
+             else if(selection==4){
+                 Room room=new Room();
+                 System.out.println("Enter Room Number:");
+                 room.setRoomNumber(scanner.nextLine());
+                 System.out.println("Enter Price of the Room:");
+                 room.setPrice(Double.parseDouble(scanner.nextLine()));
+                 System.out.println("Single Room or Double Room:");
+                 String roomType=scanner.nextLine();
+                 if (roomType.toUpperCase().contains("SINGLE"))
+                        room.setRoomType(RoomType.SINGLE);
+                 else if (roomType.toUpperCase().contains("DOUBLE"))
+                     room.setRoomType(RoomType.DOUBLE);
+                 addRoom(room);
              }
              else if (selection==5){
                  mainMenu =new MainMenu();

@@ -1,11 +1,12 @@
 package api;
 
 import model.Customer;
+import model.IRoom;
+import model.Room;
 import service.CustomerService;
-import service.ReservationService;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public class AdminResource extends CustomerService {
 
@@ -13,7 +14,20 @@ public class AdminResource extends CustomerService {
 
     }*/
 
-     public ArrayList<Customer> getCustomers(){
+      protected ArrayList<Customer> getCustomers(){
         return getAllCustomers();
     }
+
+    public void addRoom(List<IRoom> room){
+
+    }
+
+    public void addRoom(Room room){
+            addARoom(room);
+    }
+
+    public ArrayList<Room> displayRooms(){
+        return displayAllRooms();
+    }
+
 }

@@ -1,6 +1,8 @@
 package service;
 
 import model.Customer;
+import model.IRoom;
+import model.Room;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ public class CustomerService {
     private  String lastName;
     private  String email;
     private static ArrayList<Customer> customerArrayList=new ArrayList<Customer>();
+    private static ArrayList<Room> roomArrayList=new ArrayList<Room>();
 
     public void addCustomer(String email, String firstName, String lastName){
         Customer customer=new Customer(firstName,lastName,email);
@@ -26,4 +29,11 @@ public class CustomerService {
         return customerArrayList;
     }
 
+    public void addARoom(Room room){
+       roomArrayList.add(room);
+    }
+
+    public ArrayList<Room> displayAllRooms(){
+        return roomArrayList;
+    }
 }
