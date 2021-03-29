@@ -2,7 +2,14 @@ package ui;
 
 import api.AdminResource;
 import api.HotelReservationResource;
+import model.Customer;
+import model.IRoom;
+import service.ReservationService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -12,12 +19,12 @@ import java.util.Scanner;
  */
 class MainMenu extends HotelReservationResource {
     private static boolean exit=false;
-     void displayMainMenu(){
+     void displayMainMenu() throws ParseException {
          AdminMenu adminMenu=new AdminMenu();
         do{
             Scanner scanner= new Scanner(System.in);
             System.out.println("=======================");
-            System.out.println("1. Find a reserve room");
+            System.out.println("1. Find and reserve a room");
             System.out.println("2. See my reservations");
             System.out.println("3. Create an account");
             System.out.println("4. Admin");
@@ -25,7 +32,32 @@ class MainMenu extends HotelReservationResource {
             System.out.println("=======================");
             System.out.println("Enter your option:");
             int selection= Integer.parseInt(scanner.nextLine());
-            if (selection==3){
+            if (selection==1){
+                Customer customer;
+                IRoom roomToReserve;
+                Date checkIn, checkOut;
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                System.out.println("Do you have an account with us (y (yes)/ n (no))?");
+                if (scanner.nextLine().equalsIgnoreCase("y")){
+                    System.out.println("Enter your email address:");
+                    customer=getCustomer(scanner.nextLine());
+                    ArrayList<IRoom> iRoomArrayList=AdminMenu.displayAllRooms();
+                    for (IRoom iRoom:iRoomArrayList)
+                        System.out.println(iRoom);
+                    System.out.println("Enter Room Number to reserve:");
+                        roomToReserve= getRoom(scanner.nextLine());
+                    System.out.println("Enter Check In Date (dd/mm/yyyy):");
+                    checkIn= format.parse(scanner.nextLine());
+                    System.out.println("Enter Check Out Date (dd/mm/yyyy):");
+                    checkOut= format.parse(scanner.nextLine());
+                    reserveARoom(customer,roomToReserve,checkIn,checkOut);
+                    System.out.println("Room Booked!!!");
+                }
+                else if (scanner.nextLine().equalsIgnoreCase("n")){
+                    System.out.println("Create an account with us");
+                }
+            }
+            else if (selection==3){
                 System.out.println("Enter first name:");
                 String firstName=scanner.nextLine();
                 System.out.println("Enter last name:");

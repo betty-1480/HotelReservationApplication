@@ -14,21 +14,14 @@ public class Room implements IRoom {
                 '}';
     }
 
-
-    public void setRoomNumber(String roomNumber) {
+    public Room(String roomNumber, Double price, RoomType roomType) {
         this.roomNumber = roomNumber;
+        this.price = price;
+        this.roomType = roomType;
     }
 
     public Double getPrice() {
         return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public void setRoomType(RoomType roomType) {
-        this.roomType = roomType;
     }
 
     public String getRoomNumber() {

@@ -7,13 +7,14 @@ import model.IRoom;
 import model.Room;
 import model.RoomType;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 class AdminMenu extends AdminResource {
     private static boolean exit=false;
 
-     void displayAdminMenu(){
+     void displayAdminMenu() throws ParseException {
          MainMenu mainMenu;
          while (!exit){
              Scanner scanner= new Scanner(System.in);
@@ -33,23 +34,28 @@ class AdminMenu extends AdminResource {
                  }
              }
              else if (selection==2){
-                ArrayList<Room> rooms=displayRooms();
-                 for (Room room:rooms)
-                     System.out.println(room.toString());
+                ArrayList<IRoom> rooms=displayRooms();
+                 for (IRoom iRoom:rooms)
+                     System.out.println(iRoom.toString());
              }
              else if(selection==4){
-                 Room room=new Room();
+                 IRoom iRoom;
                  System.out.println("Enter Room Number:");
-                 room.setRoomNumber(scanner.nextLine());
+                 String roomNumber=scanner.nextLine();
                  System.out.println("Enter Price of the Room:");
-                 room.setPrice(Double.parseDouble(scanner.nextLine()));
+                 Double price=Double.parseDouble(scanner.nextLine());
                  System.out.println("Single Room or Double Room:");
                  String roomType=scanner.nextLine();
-                 if (roomType.toUpperCase().contains("SINGLE"))
-                        room.setRoomType(RoomType.SINGLE);
-                 else if (roomType.toUpperCase().contains("DOUBLE"))
-                     room.setRoomType(RoomType.DOUBLE);
-                 addRoom(room);
+                 if (roomType.toUpperCase().contains("SINGLE")){
+                     iRoom=new Room(roomNumber,price,RoomType.SINGLE);
+                     addRoom(iRoom);
+                 }
+                 else if (roomType.toUpperCase().contains("DOUBLE")){
+                     iRoom=new Room(roomNumber,price,RoomType.DOUBLE);
+                     addRoom(iRoom);
+                 }
+                 else
+                     System.out.println("Invalid Room Type!");
              }
              else if (selection==5){
                  mainMenu =new MainMenu();

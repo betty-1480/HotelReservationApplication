@@ -10,11 +10,8 @@ import java.util.List;
 
 public class AdminResource extends CustomerService {
 
-/*    public Customer getCustomer(String email){
 
-    }*/
-
-      protected ArrayList<Customer> getCustomers(){
+    protected ArrayList<Customer> getCustomers(){
         return getAllCustomers();
     }
 
@@ -22,11 +19,11 @@ public class AdminResource extends CustomerService {
 
     }
 
-    public void addRoom(Room room){
-            addARoom(room);
+    public void addRoom(IRoom iRoom){
+            addARoom(iRoom);
     }
 
-    public ArrayList<Room> displayRooms(){
+    public static ArrayList<IRoom> displayRooms(){
         return displayAllRooms();
     }
 
