@@ -7,6 +7,7 @@ import service.CustomerService;
 import service.ReservationService;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 public class HotelReservationResource extends ReservationService {
@@ -18,9 +19,9 @@ public class HotelReservationResource extends ReservationService {
     }
 
     public IRoom getRoom(String roomNumber){
+
         return getARoom(roomNumber);
     }
-
 
     public void  createACustomer(String email, String firstName, String lastName){
         customerService.addCustomer(email,firstName,lastName);
@@ -33,4 +34,10 @@ public class HotelReservationResource extends ReservationService {
     public Collection<IRoom> findARoom(Date checkin, Date checkout){
         return findRooms(checkin, checkout);
     }
+
+    public Collection<Reservation> getCustomersReservations(String emailId){
+        Customer customer=getCustomer(emailId);
+        return getCustomerReservations(customer);
+    }
+
 }

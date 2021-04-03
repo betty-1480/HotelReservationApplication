@@ -2,10 +2,7 @@ package ui;
 
 import api.AdminResource;
 import com.sun.tools.javac.Main;
-import model.Customer;
-import model.IRoom;
-import model.Room;
-import model.RoomType;
+import model.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -34,9 +31,11 @@ class AdminMenu extends AdminResource {
                  }
              }
              else if (selection==2){
-                ArrayList<IRoom> rooms=displayRooms();
-                 for (IRoom iRoom:rooms)
-                     System.out.println(iRoom.toString());
+                for (IRoom iRoom:printAllRooms())
+                    System.out.println(iRoom);
+             }
+             else if(selection==3){
+                 displayAllReservations();
              }
              else if(selection==4){
                  IRoom iRoom;
@@ -47,11 +46,11 @@ class AdminMenu extends AdminResource {
                  System.out.println("Single Room or Double Room:");
                  String roomType=scanner.nextLine();
                  if (roomType.toUpperCase().contains("SINGLE")){
-                     iRoom=new Room(roomNumber,price,RoomType.SINGLE);
+                     iRoom=new FreeRoom(roomNumber,price,RoomType.SINGLE);
                      addRoom(iRoom);
                  }
                  else if (roomType.toUpperCase().contains("DOUBLE")){
-                     iRoom=new Room(roomNumber,price,RoomType.DOUBLE);
+                     iRoom=new FreeRoom(roomNumber,price,RoomType.DOUBLE);
                      addRoom(iRoom);
                  }
                  else
