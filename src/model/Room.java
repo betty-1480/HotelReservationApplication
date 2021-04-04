@@ -2,7 +2,7 @@ package model;
 
 import java.util.Objects;
 
-public class Room implements IRoom, Comparable<Room> {
+public class Room implements IRoom {
     private String roomNumber;
     private Double price;
     private RoomType roomType;
@@ -56,8 +56,7 @@ public class Room implements IRoom, Comparable<Room> {
     }
 
     @Override
-    public int compareTo(Room o) {
-        return roomNumber.compareTo(o.roomNumber);
+    public int compareTo(IRoom o) {
+        return getRoomNumber().compareTo(o.getRoomNumber());
     }
-
 }

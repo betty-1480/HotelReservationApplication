@@ -41,11 +41,13 @@ public class CustomerService {
     protected static ArrayList<IRoom> displayFreeRooms(){
         return iFreeRoomArrayList;
     }
+
     protected Collection<IRoom> printAllRooms(){
         List<IRoom> allRooms=new ArrayList<IRoom>();
         allRooms.addAll(iRoomMap.values());
         allRooms.addAll(iFreeRoomMap.values());
         Collections.sort(allRooms);
+
         return allRooms;
     }
 }
