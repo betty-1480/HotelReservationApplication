@@ -1,6 +1,7 @@
 package ui;
 
 import api.AdminResource;
+import api.HotelReservationResource;
 import com.sun.tools.javac.Main;
 import model.*;
 
@@ -8,9 +9,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class AdminMenu extends AdminResource {
-    private static boolean exit=false;
+class AdminMenu {
 
+    private static AdminResource adminResource=AdminResource.getInstance();
+
+    private static boolean exit=false;
      void displayAdminMenu() throws ParseException {
          MainMenu mainMenu;
          while (!exit){
@@ -25,17 +28,17 @@ class AdminMenu extends AdminResource {
              System.out.println("Enter your option:");
              int selection= Integer.parseInt(scanner.nextLine());
              if (selection==1){
-                 ArrayList<Customer> customers= getCustomers();
+                 ArrayList<Customer> customers= adminResource.getCustomers();
                  for (Customer customer:customers){
                      System.out.println(customer.toString());
                  }
              }
              else if (selection==2){
-                for (IRoom iRoom:printAllRooms())
+                for (IRoom iRoom:adminResource.getAllRooms())
                     System.out.println(iRoom);
              }
              else if(selection==3){
-                 displayAllReservations();
+                 adminResource.displayAllReservations();
              }
              else if(selection==4){
                  IRoom iRoom;
@@ -47,11 +50,11 @@ class AdminMenu extends AdminResource {
                  String roomType=scanner.nextLine();
                  if (roomType.toUpperCase().contains("SINGLE")){
                      iRoom=new FreeRoom(roomNumber,price,RoomType.SINGLE);
-                     addRoom(iRoom);
+                     adminResource.addRoom(iRoom);
                  }
                  else if (roomType.toUpperCase().contains("DOUBLE")){
                      iRoom=new FreeRoom(roomNumber,price,RoomType.DOUBLE);
-                     addRoom(iRoom);
+                     adminResource.addRoom(iRoom);
                  }
                  else
                      System.out.println("Invalid Room Type!");

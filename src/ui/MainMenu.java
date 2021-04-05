@@ -9,16 +9,16 @@ import service.ReservationService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Scanner class can be used to read input from the console.
  * Scanner class can also use RegEx to parse console input.
  * It parses primitive types and String types into tokens.
  */
-class MainMenu extends HotelReservationResource {
+class MainMenu {
+    private static HotelReservationResource hotelReservationResource=HotelReservationResource.getInstance();
     private static boolean exit=false;
      void displayMainMenu() throws ParseException {
          AdminMenu adminMenu=new AdminMenu();
@@ -42,31 +42,52 @@ class MainMenu extends HotelReservationResource {
                     String lastName=scanner.nextLine();
                     System.out.println("Enter email address:");
                     email=scanner.nextLine();
-                    createACustomer(email,firstName,lastName);
+                    hotelReservationResource.createACustomer(email,firstName,lastName);
                     break;
                 case 2:
                     Customer customer;
                     IRoom roomToReserve;
                     Date checkIn, checkOut;
                     Reservation reservation;
+                    Collection<IRoom> roomsToReserve;
                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                     System.out.println("Do you have an account with us (y (yes)/ n (no))?");
                     if (scanner.nextLine().equalsIgnoreCase("y")){
                         System.out.println("Enter your email address:");
-                        customer=getCustomer(scanner.nextLine());
-                        System.out.println("Enter Check In Date (dd/mm/yyyy):");
-                        checkIn= format.parse(scanner.nextLine());
-                        System.out.println("Enter Check Out Date (dd/mm/yyyy):");
-                        checkOut= format.parse(scanner.nextLine());
-                        System.out.println("------------Available Rooms-------------");
-                        for (IRoom iRoom:findARoom(checkIn,checkOut))
-                            System.out.println(iRoom);
-                        System.out.println("----------------------------------------");
-                        System.out.println("Enter Room Number to reserve:");
-                        roomToReserve= getRoom(scanner.nextLine());
-                        reservation= reserveARoom(customer,roomToReserve,checkIn,checkOut);
-                        System.out.println("Room Booked!!!");
-                        System.out.println("ReservationNo:"+reservation.getReservationId());
+                        customer=hotelReservationResource.getCustomer(scanner.nextLine());
+                        Calendar calender = Calendar.getInstance();
+                        Date date = new java.util.Date();
+                        calender.setTime(date);
+                        Date currentDate=calender.getTime();
+                        do{
+                            System.out.println("Enter Check In Date (dd/mm/yyyy):");
+                            checkIn= format.parse(scanner.nextLine());
+                            if (!checkIn.after(currentDate))
+                                System.out.println("Issues fount with the checkin date, please verify and fix.");
+                        }while(checkIn.before(currentDate));
+
+                        do{
+                            System.out.println("Enter Check Out Date (dd/mm/yyyy):");
+                            checkOut= format.parse(scanner.nextLine());
+                            if (!checkOut.after(currentDate)||!checkOut.before(checkIn)||checkIn.equals(checkOut))
+                                System.out.println("Issues fount with the checkin date, please verify and fix.");
+                        }while (checkOut.before(currentDate)||checkOut.before(checkIn)||checkIn.equals(checkOut));
+
+                        roomsToReserve=hotelReservationResource.findARoom(checkIn,checkOut);
+                        if(roomsToReserve.size()>0){
+                            System.out.println("------------Available Rooms-------------");
+                            for (IRoom iRoom:roomsToReserve)
+                                System.out.println(iRoom);
+                            System.out.println("----------------------------------------");
+                            System.out.println("Enter Room Number to reserve:");
+                            roomToReserve= hotelReservationResource.getRoom(scanner.nextLine());
+                            reservation= hotelReservationResource.bookARoom(customer,roomToReserve,checkIn,checkOut);
+                            System.out.println("Room Booked!!!");
+                            System.out.println("ReservationNo:"+reservation.getReservationId());
+                        }
+                        else {
+                            System.out.println("Currently there are no rooms available to book");
+                        }
                     }
                     else if (scanner.nextLine().equalsIgnoreCase("n")){
                         System.out.println("Please create an account with us");
@@ -78,7 +99,7 @@ class MainMenu extends HotelReservationResource {
                         System.out.println("Enter your email address:");
                         email = scanner.nextLine();
                         System.out.println("All the reservations you made are listed below:");
-                        for (Reservation myReservation:getCustomersReservations(email)){
+                        for (Reservation myReservation:hotelReservationResource.getCustomersReservations(email)){
                             System.out.println(myReservation);
                         }
                     }

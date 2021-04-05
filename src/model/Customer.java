@@ -7,6 +7,7 @@ public class Customer {
     private final String firstName;
     private final String lastName;
     private final String email;
+    private static final String emailRegex = "^(.+)@(.+).com$";
     /**
      *  final - keyword means that the value can’t be modified in the future
      *
@@ -27,7 +28,7 @@ public class Customer {
      */
 
     public Customer(String firstName, String lastName, String email){
-        final String emailRegex = "^(.+)@(.+).com$";
+
         final Pattern pattern =Pattern.compile(emailRegex);
         if (!pattern.matcher(email).matches())
             throw new IllegalArgumentException("Error, Invalid email");

@@ -10,9 +10,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 
-public class HotelReservationResource extends ReservationService {
+public class HotelReservationResource {
 
-    private CustomerService customerService=new CustomerService();
+    private CustomerService customerService=CustomerService.getInstance();
+    private ReservationService reservationService=ReservationService.getInstance();
+
+    private HotelReservationResource(){} //Singleton Step1: a private constructor
+
+    private static HotelReservationResource hotelReservationResource=new HotelReservationResource(); //Singleton Step2: private static instance member
+
+    public static HotelReservationResource getInstance() { //Singleton Step3: public static getInstance Method
+        return hotelReservationResource;
+    }
 
     public Customer getCustomer(String email){
         return CustomerService.getCustomer(email);
@@ -20,24 +29,24 @@ public class HotelReservationResource extends ReservationService {
 
     public IRoom getRoom(String roomNumber){
 
-        return getARoom(roomNumber);
+        return reservationService.getARoom(roomNumber);
     }
 
     public void  createACustomer(String email, String firstName, String lastName){
         customerService.addCustomer(email,firstName,lastName);
     }
 
-    public Reservation booARoom(Customer customer, IRoom iRoom, Date checkIn, Date checkOut){
-            return reserveARoom(customer,iRoom,checkIn,checkOut);
+    public Reservation bookARoom(Customer customer, IRoom iRoom, Date checkIn, Date checkOut){
+            return reservationService.reserveARoom(customer,iRoom,checkIn,checkOut);
     }
 
     public Collection<IRoom> findARoom(Date checkin, Date checkout){
-        return findRooms(checkin, checkout);
+        return reservationService.findRooms(checkin, checkout);
     }
 
     public Collection<Reservation> getCustomersReservations(String emailId){
         Customer customer=getCustomer(emailId);
-        return getCustomerReservations(customer);
+        return reservationService.getCustomerReservations(customer);
     }
 
 }

@@ -11,10 +11,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class AdminResource extends CustomerService {
+public class AdminResource {
 
-    protected ArrayList<Customer> getCustomers(){
-        return getAllCustomers();
+   private CustomerService customerService=CustomerService.getInstance();
+
+   private AdminResource(){}  //Singleton Step1: a private constructor
+
+   private static final AdminResource adminResource=new AdminResource(); //Singleton Step2: private static instance member
+
+   public static AdminResource getInstance(){  //Singleton Step3: public static getInstance Method
+       return adminResource;
+   }
+
+    public ArrayList<Customer> getCustomers(){
+        return customerService.getAllCustomers();
     }
 
     public void addRoom(List<IRoom> room){
@@ -22,11 +32,11 @@ public class AdminResource extends CustomerService {
     }
 
     public void addRoom(IRoom iRoom){
-            addARoom(iRoom);
+        customerService.addARoom(iRoom);
     }
 
-    public static ArrayList<IRoom> getAllFreeRooms(){
-        return displayFreeRooms();
+    public ArrayList<IRoom> getAllFreeRooms(){
+        return customerService.displayFreeRooms();
     }
 
     public void displayAllReservations(){
@@ -34,6 +44,6 @@ public class AdminResource extends CustomerService {
     }
 
     public Collection<IRoom> getAllRooms(){
-        return printAllRooms();
+        return customerService.printAllRooms();
     }
 }
